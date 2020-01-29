@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UsersController < ProtectedController
+class UsersController < OpenReadController
   skip_before_action :authenticate, only: %i[signup signin]
 
   # POST '/sign-up'
@@ -46,11 +46,19 @@ class UsersController < ProtectedController
     end
   end
 
+  def edit_info
+    current_user.update(edit_creds)
+  end
+
   private
 
   def user_creds
     params.require(:credentials)
           .permit(:email, :password, :password_confirmation)
+  end
+
+  def edit_creds
+    params.require(:user).permit(:given_name, :family_name, :phone_number, :food_preferences)
   end
 
   def pw_creds
