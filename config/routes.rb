@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :restaurants, except: %i[new edit]
   # RESTful routes
   resources :examples, except: %i[new edit]
 
   # Custom routes
-  patch '/info' => 'users#editInfo'
+  patch '/info' => 'users#edit_info'
   post '/sign-up' => 'users#signup'
   post '/sign-in' => 'users#signin'
   delete '/sign-out' => 'users#signout'
